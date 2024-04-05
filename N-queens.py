@@ -251,6 +251,7 @@ def SimulatedAnnealing():
                 countRestart+=1
                 PopulateBoard()
                 t = 0
+                T = 1000
                 NewBoard = board.copy()
                 bestBoard = board.copy()
                 bestCheck = CheckCounterFinder(bestBoard)
