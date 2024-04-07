@@ -1,5 +1,6 @@
 import random
 import sys
+import time
 
 ### N-QUEENS PROBLEM ###
 
@@ -78,15 +79,13 @@ for i in range(0,n):
 def CheckCounterFinder(board):
     CheckCounter = 0
     for i in range(0,n): #regina 1
-        for j in range(0,n): # regina 2
-            if i != j :
-                if board[i] == board[j]: # scacco orizzontale
-                    CheckCounter+=1
-                elif i+board[i] == j+board[j]:  # scacco diagonale primaria 
-                    CheckCounter+=1     
-                elif i-board[i] == j-board[j]: # scacco diagonale secondaria
-                    CheckCounter+=1           
-    CheckCounter/=2
+        for j in range(0,i): # regina 2
+            if board[i] == board[j]: # scacco orizzontale
+                CheckCounter+=1
+            elif i+board[i] == j+board[j]:  # scacco diagonale primaria 
+                CheckCounter+=1     
+            elif i-board[i] == j-board[j]: # scacco diagonale secondaria
+                CheckCounter+=1           
     return CheckCounter
 
 def SteepestDescent():
@@ -251,7 +250,7 @@ def SimulatedAnnealing():
                 countRestart+=1
                 PopulateBoard()
                 t = 0
-                T = 1000
+                T=1000
                 NewBoard = board.copy()
                 bestBoard = board.copy()
                 bestCheck = CheckCounterFinder(bestBoard)
@@ -292,12 +291,15 @@ def SimulatedAnnealing():
 
 
 def NQueenResolver():
+    t1 = time.time()
     if A == "SD":
         Sol = SteepestDescent()
     elif A == "HC":
         Sol = HillClimbing()
     elif A == "SA":
         Sol = SimulatedAnnealing()
+    t2 = time.time()
+    execution_time = t2-t1
     for i in range(0,n):
         row = []
         for j in Sol:
@@ -307,6 +309,7 @@ def NQueenResolver():
                 row.append('0')
         print(row)
     print("\n",Sol,CheckCounterFinder(Sol))
+    print("\nSoluzione trovata in: ",execution_time," s")
     
 print("\n",board,CheckCounterFinder(board))
 print("\n\n")
